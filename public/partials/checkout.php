@@ -7,10 +7,10 @@ $progress                 = sejolisa_get_donation_progress($post->ID);
 $use_checkout_description = boolval(carbon_get_post_meta($post->ID, 'display_product_description'));
 $display_password         = boolval(carbon_get_theme_option('sejoli_registration_display_password'));
 
-$display_text_field_full_name    = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_full_name'));
-$display_text_field_email        = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_email'));
-$display_text_field_password     = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_password'));
-$display_text_field_phone_number = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_phone_number'));
+$display_text_field_full_name    = boolval(carbon_get_post_meta($post->ID, 'display_text_field_full_name'));
+$display_text_field_email        = boolval(carbon_get_post_meta($post->ID, 'display_text_field_email'));
+$display_text_field_password     = boolval(carbon_get_post_meta($post->ID, 'display_text_field_password'));
+$display_text_field_phone_number = boolval(carbon_get_post_meta($post->ID, 'display_text_field_phone_number'));
 ?>
 <div class="ui text container donation-checkout">
 
@@ -330,8 +330,7 @@ $display_text_field_phone_number = boolval(sejolisa_carbon_get_post_meta(get_the
             <?php if(false !== $display_text_field_password) : ?>
             <p><?php _e('Tuliskan password yang akan digunakan untuk website ini. Pastikan untuk menyimpan atau mengingat password yang ditulis.', 'sejoli'); ?></p>
             <?php endif; ?>
-            <input type="password" name="user_password" id="user_password" placeholder="<?php _e('Buat password untuk website ini', 'sejoli'); ?>" autocomplete='false'>
-        </div>
+            <input type="password" name="user_password" id="user_password" placeholder="<?php _e('Buat password untuk website ini', 'sejoli'); ?>" autocomplete='false'>        </div>
         <?php endif; ?>
         <div class="required field">
             <label><?php _e('Nomor WhatsApp', 'sejoli'); ?></label>
@@ -370,6 +369,10 @@ jQuery(document).ready(function($){
 
     $('#donation-progress-bar').progress();
 
+    setTimeout(function(){ 
+        $('.kode-diskon').hide();
+    }, 2000);
+
     sejoliSaCheckout.init();
 
     $(document).on('ready', '#price', function(){
@@ -377,6 +380,7 @@ jQuery(document).ready(function($){
         var data = sejoliSaCheckout.func.setData('calculate', sejoli_checkout.ajax_nonce.get_calculate);
 
         setTimeout(function(){ 
+            $('.kode-diskon').hide();
             var payment_gateway  = $('input[name="payment_gateway"]:checked').val();
             data.payment_gateway = payment_gateway;
 
