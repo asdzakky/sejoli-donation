@@ -5,7 +5,12 @@ sejoli_get_template_part( 'checkout/header-logo.php' );
 $product                  = sejolisa_get_product($post->ID);
 $progress                 = sejolisa_get_donation_progress($post->ID);
 $use_checkout_description = boolval(carbon_get_post_meta($post->ID, 'display_product_description'));
-$display_password = boolval(carbon_get_theme_option('sejoli_registration_display_password'));
+$display_password         = boolval(carbon_get_theme_option('sejoli_registration_display_password'));
+
+$display_text_field_full_name    = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_full_name'));
+$display_text_field_email        = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_email'));
+$display_text_field_password     = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_password'));
+$display_text_field_phone_number = boolval(sejolisa_carbon_get_post_meta(get_the_ID(), 'display_text_field_phone_number'));
 ?>
 <div class="ui text container donation-checkout">
 
@@ -300,32 +305,40 @@ $display_password = boolval(carbon_get_theme_option('sejoli_registration_display
 </script>
 <script id="informasi-pribadi-template" type="text/x-jsrender">
     <div class="informasi-pribadi-info">
-        <p>Isi data-data di bawah untuk informasi akses di website ini.</p>
+        <p><?php _e('Isi data-data di bawah untuk bisa mengakses member area serta informasi terkait pembelian.', 'sejoli'); ?></p>
     </div>
-    <h3>Informasi Pribadi</h3>
+    <h3 style="margin: 15px 0 10px 0;"><?php _e('Buat Akun Baru', 'sejoli'); ?></h3>
     <div class="ui form">
         <div class="required field">
-            <label>Nama</label>
-            <input type="text" name="user_name" id="user_name" placeholder="Masukan nama anda">
+            <label><?php _e('Nama Lengkap', 'sejoli'); ?></label>
+            <?php if(false !== $display_text_field_full_name) : ?>
+            <p><?php _e('Masukkan nama lengkap untuk kemudahan jika suatu saat diperlukan pencarian data.', 'sejoli'); ?></p>
+            <?php endif; ?>
+            <input type="text" name="user_name" id="user_name" placeholder="<?php _e('Masukkan nama lengkap', 'sejoli'); ?>">
         </div>
         <div class="required field">
-            <label>Alamat Email</label>
-            <p>Kami akan mengirimkan konfirmasi pembayaran dan password ke alamat ini</p>
-            <input type="email" name="user_email" id="user_email" placeholder="Masukan alamat email">
+            <label><?php _e('Alamat Email', 'sejoli'); ?></label>
+            <?php if(false !== $display_text_field_email) : ?>
+            <p><?php _e('Kami mengirimkan informasi akses dan transaksi pembelian ke alamat email ini.', 'sejoli'); ?></p>
+            <?php endif; ?>
+            <input type="email" name="user_email" id="user_email" placeholder="<?php _e('Masukkan email yang aktif digunakan', 'sejoli'); ?>">
             <div class="alert-holder user-email-alert-holder"></div>
         </div>
-        <?php
-
-        if($display_password) : ?>
-        <div class="required field">
-            <label>Password</label>
-            <input type="password" name="user_password" id="user_password" placeholder="Masukan password anda">
+        <?php if(false !== $product->form['password_field']) : ?>
+        <div class="required field" style="position: relative;">
+            <label><?php _e('Buat Password', 'sejoli'); ?></label>
+            <?php if(false !== $display_text_field_password) : ?>
+            <p><?php _e('Tuliskan password yang akan digunakan untuk website ini. Pastikan untuk menyimpan atau mengingat password yang ditulis.', 'sejoli'); ?></p>
+            <?php endif; ?>
+            <input type="password" name="user_password" id="user_password" placeholder="<?php _e('Buat password untuk website ini', 'sejoli'); ?>" autocomplete='false'>
         </div>
         <?php endif; ?>
         <div class="required field">
-            <label>No Handphone</label>
-            <p>Kami akan menggunakan no hp untuk keperluan administrasi</p>
-            <input type="text" name="user_phone" id="user_phone" placeholder="Masukan no handphone">
+            <label><?php _e('Nomor WhatsApp', 'sejoli'); ?></label>
+            <?php if(false !== $display_text_field_phone_number) : ?>
+            <p><?php _e('Masukkan nomor WhatsApp aktif untuk notifikasi transaksi', 'sejoli'); ?></p>
+            <?php endif; ?>
+            <input type="text" name="user_phone" id="user_phone" placeholder="<?php _e('Masukkan nomor WhatsApp yang aktif digunakan', 'sejoli'); ?>">
             <div class="alert-holder user-phone-alert-holder"></div>
         </div>
     </div>

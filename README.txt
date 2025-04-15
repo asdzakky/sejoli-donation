@@ -33,6 +33,9 @@ Coming soon
 
 == Changelog ==
 
+= 1.2.4 =
+* Fix custom display setting in chekout form
+
 = 1.2.3 =
 * Fix display donation name
 
