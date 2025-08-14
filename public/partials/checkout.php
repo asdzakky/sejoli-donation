@@ -373,6 +373,10 @@ jQuery(document).ready(function($){
         $('.kode-diskon').hide();
     }, 2000);
 
+    setTimeout(function(){ 
+        $('#price').val('');
+    }, 4250);
+
     sejoliSaCheckout.init();
 
     $(document).on('ready', '#price', function(){

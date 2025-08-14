@@ -182,14 +182,13 @@ class Checkout {
 				$min_price = carbon_get_post_meta($product_id, 'donation_min');
 				$max_price = carbon_get_post_meta($product_id, 'donation_max');
 
-
 				if(0 === $this->request_vars['price']) :
 
 					$this->donation_invalid = 'min';
 
 				elseif($min_price > $this->request_vars['price']) :
 
-					$price                  = $min_price;
+					$price                  = 0;
 					$this->donation_invalid = 'min';
 					$this->request_vars['price'] = $price;
 

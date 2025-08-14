@@ -140,16 +140,17 @@ function sejolisa_get_donatur_list($product_id, $product = NULL, $limit = 0) {
 
         Carbon::setLocale('id');
 
-        if(false !== $response['valid']) :
+        $orders = is_array($response['orders']) ? $response['orders'] : [];
+        $donatur_list = [];
 
-            foreach($response['orders'] as $order) :
+        if (false !== $response['valid'] && is_array($orders)) :
 
+            foreach($orders as $order) :
                 $donatur_list[$order->ID] = array(
                     'name'       => $order->user_name,
                     'total'      => sejolisa_price_format($order->grand_total),
                     'human_time' => Carbon::parse(current_time('mysql'))->diffForHumans($order->updated_at),
                 );
-
             endforeach;
 
             set_transient($key, $donatur_list, 30 * DAY_IN_SECONDS);
